@@ -407,6 +407,14 @@ describe Factory do
       child.build_class.should == Other
     end
 
+    it "should create a new factory aliasing another factory" do
+      class Other; end
+
+      Factory.define(:other) {}
+      child = Factory.define(:child, :parent => :other) # no block
+      child.build_class.should == Other
+    end
+
     it "should create a new factory with attributes of the parent" do
       child = Factory.define(:child, :parent => :object) {}
       child.attributes.size.should == 1

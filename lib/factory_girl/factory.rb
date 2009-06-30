@@ -45,7 +45,7 @@ class Factory
   # The newly created factory.
   def self.define (name, options = {})
     instance = Factory.new(name, options)
-    yield(instance)
+    yield(instance) if block_given?
     if parent = options.delete(:parent)
       instance.inherit_from(Factory.factory_by_name(parent))
     end    
