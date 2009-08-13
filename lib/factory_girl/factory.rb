@@ -1,4 +1,6 @@
 class Factory
+  undef :type
+  undef :id
 
   # Raised when a factory is defined that attempts to instantiate itself.
   class AssociationDefinitionError < RuntimeError
@@ -43,7 +45,7 @@ class Factory
   # The newly created factory.
   def self.define (name, options = {})
     instance = Factory.new(name, options)
-    yield(instance)
+    yield(instance) if block_given?
     if parent = options.delete(:parent)
       instance.inherit_from(Factory.factory_by_name(parent))
     end    
